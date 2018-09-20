@@ -49,13 +49,13 @@ while (1):
     convert_locate_A = filename()[0] + "OK/" + filename()[1]
     convert_locate_B = filename()[0] + "Backup/" + filename()[1]
 #    print(convert_locate_A, convert_locate_B)
-    send_command_OK = 'rtmpdump -r "rtmp://10.0.0.174:1935/" -y "A0 - 0 - 0 - 0 - C8244C5037F000019141179085601DE4 - admin - 888888 - 0" -Y -o ' + convert_locate_A + '.flv -v'
-    send_command_Backup = 'rtmpdump -r "rtmp://10.0.0.174:1935/" -y "A0 - 0 - 0 - 0 - C8244C5037F000019141179085601DE4 - admin - 888888 - 0" -Y -o ' + convert_locate_B + '.flv -v'
+    send_command_OK = 'rtmpdump -r "rtmp://10.0.0.174:1935/" -y "A0 - 0 - 0 - 0 - C824C9A84D4000011C3212B0134F13B7 - admin - 888888 - 0" -Y -o ' + convert_locate_A + '.flv -v'
+    send_command_Backup = 'rtmpdump -r "rtmp://10.0.0.174:1935/" -y "A0 - 0 - 0 - 0 - C824C9A84D4000011C3212B0134F13B7 - admin - 888888 - 0" -Y -o ' + convert_locate_B + '.flv -v'
     record_OK = subprocess.Popen(send_command_OK)
     time.sleep(0.01)
     record_Backup = subprocess.Popen(send_command_Backup)
 #    print(send_command_OK)
 #    print(send_command_ERROR)
-    time.sleep(100)
+    time.sleep(600)
     record_OK.kill()
     record_Backup.kill()
