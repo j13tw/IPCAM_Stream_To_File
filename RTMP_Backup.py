@@ -1,15 +1,8 @@
 import os, sys
 import datetime
 import time
-
-ffmpeg_header = "ffmpeg -rtsp_transport tcp -i "
-rtsp_link = "rtsp://10.21.20.229:8554/channel=3/subtype=0/vod="
-encoder = " -vcodec h264_nvenc"
-fps_set = " -r 30"
-convert_locate = "G:/"
-record_time = " -ss 00:00:05 -t 00:10:00"
-resolution_size = " -s 2560x1440 "
-data_format = ".mp4"
+import uuid
+import subprocess
 
 def filename():
     convert_locate = "G:/"
@@ -44,17 +37,28 @@ def filename():
     if not os.path.isdir(convert_locate + "/" + "OK"):
         os.mkdir(convert_locate + "/" + "OK")
     
-    if not os.path.isdir(convert_locate + "/" + "ERROR"):
-        os.mkdir(convert_locate + "/" + "ERROR")
+    if not os.path.isdir(convert_locate + "/" + "Backup"):
+        os.mkdir(convert_locate + "/" + "Backup")
 
     return convert_locate, hour+minute+second
 
 #print(filename()[0], filename()[1])
 
+RTMP_DUMP_HEADER = "rtmpdump"
+RTMP_HEADER = "rtmp://"
+RTMP_IP = "10.0.0.174"
+RTMP_PORT = "1935"
+RTMP_URL_HEADER = "A0 - 0 - 0 - 0 - "
+IPCAM_ACCOUNT = "admin"
+IPCAM_PASSWORD = "888888"
+
+generate_uuid = uuid.uuid4()
+user_uuid = str(generate_uuid).upper().replace('-', '')
+
 while (1):
-    convert_locate = filename()[0] + "Backuo/" + filename()[1]
-    send_command = 'rtmpdump -r "rtmp://10.0.0.174:1935/" -y "A0 - 0 - 0 - 0 - C8244C5037F000019141179085601DE4 - admin - 888888 - 0" -Y -o ' + convert_locate + '.flv -v'
-    record_Backup = subprocess.Popen(send_command)
+    convert_locate = filename()[0] + "Backup/" + filename()[1]
+    send_command = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate + '.flv -v'
     print(send_command)
-    time.sleep(10)
+    record_Backup = subprocess.Popen(send_command)
+    time.sleep(60)
     record_Backup.kill()
