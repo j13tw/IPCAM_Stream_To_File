@@ -44,7 +44,7 @@ def filename():
     year = str(datetime.datetime.now().year)
     month = datetime.datetime.now().month
     if (month < 10): month = "0" + str(month)
-    else: str(month)
+    else: month = str(month)
     day = datetime.datetime.now().day
     if (day < 10): day = "0" + str(day)
     else: day = str(day)
@@ -93,5 +93,5 @@ while (1):
     record_Backup.kill()
 #   kill backup file    
 #    print(filename()[0] + "Backup\\")
-    shutil.rmtree(filename()[0] + "Backup\\")
+    os.system("rm -rf " + filename()[0] + "Backup\\")
     record_OK.kill()
