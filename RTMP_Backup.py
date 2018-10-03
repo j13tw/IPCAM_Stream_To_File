@@ -7,21 +7,16 @@ import subprocess
 def filename():
     convert_locate = "G:/"
     year = str(datetime.datetime.now().year)
-    month = datetime.datetime.now().month
+    month = str(datetime.datetime.now().month)
     if (int(month) < 10): month = "0" + str(month)
-    else: str(month)
     day = str(datetime.datetime.now().day)
     if (int(day) < 10): day = "0" + str(day)
-    else: str(day)
     hour = str(datetime.datetime.now().hour)
     if (int(hour) < 10): hour = "0" + str(hour)
-    else: str(hour)
     minute = str(datetime.datetime.now().minute)
     if (int(minute) < 10): minute = "0" + str(minute)
-    else: str(minute)
     second = str(datetime.datetime.now().second)
     if (int(second) < 10): second = "0" + str(second)
-    else: str(second)
     #print(year, month, day, hour, minute, second)
 
     convert_locate = convert_locate + year + "-" + month 
@@ -59,6 +54,6 @@ while (1):
     convert_locate = filename()[0] + "Backup/" + filename()[1]
     send_command = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate + '.flv -v'
     print(send_command)
-    record_Backup = subprocess.Popen(send_command)
+    record_Backup = subprocess.Popen(send_command, shell = True)
     time.sleep(60)
     record_Backup.kill()

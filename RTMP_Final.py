@@ -15,21 +15,22 @@ RTMP_URL_HEADER = "A0 - 0 - 0 - 0 - "
 IPCAM_ACCOUNT = "admin"
 IPCAM_PASSWORD = "888888"
 convert_locate = "G:\\"
+pre_record_day = ""
 
 def remove_dir():
     global convert_locate
     all_dir = sorted(os.listdir(convert_locate))
 #    print(all_dir)
 #   delete the oldest file dir
-    shutil.rmtree(convert_locate + all_dir[0])
+    os.system("rm -rf " + convert_locate + all_dir[0])
     print("rm dir = " + all_dir[0])
 
 def check_disk():
     global convert_locate
     obj_disk = psutil.disk_usage(convert_locate)
-    total_disk = round(obj_disk.total / (1024.0 ** 3), 3)
-    usage_disk = round(obj_disk.used / (1024.0 ** 3), 3)
-    free_disk = round(obj_disk.free / (1024.0 ** 3), 3)
+#    total_disk = round(obj_disk.total / (1024.0 ** 3), 3)
+#    usage_disk = round(obj_disk.used / (1024.0 ** 3), 3)
+#    free_disk = round(obj_disk.free / (1024.0 ** 3), 3)
     usage_persent_disk = obj_disk.percent
     if ((100 - usage_persent_disk) < 10):
 #        print("Disk full alert")
@@ -71,7 +72,7 @@ def filename():
     if not os.path.isdir(store_locate + "\\" + "Backup"):
         os.mkdir(store_locate + "\\" + "Backup")
 
-    return store_locate, hour+minute+second
+    return store_locate, hour+minute+second, 
 
 #print(filename()[0], filename()[1])
 
@@ -89,9 +90,16 @@ while (1):
     record_Backup = subprocess.Popen(send_command_Backup)
     time.sleep(0.01)
     record_OK = subprocess.Popen(send_command_OK)
-    time.sleep(60)
+    time.sleep(10)
     record_Backup.kill()
-#   kill backup file    
-#    print(filename()[0] + "Backup\\")
-    os.system("rm -rf " + filename()[0] + "Backup\\")
+    time.sleep(0.01)
     record_OK.kill()
+#   kill backup file    
+#    print("File Dir == " + filename()[0])
+    if (pre_record_day == ""):
+#        print("\n Get pre_record_day")
+        pre_record_day = filename()[0]
+#    else: print("\n" + pre_record_day)
+    if (pre_record_day != filename()[0]):
+        os.system("rm -r " + pre_record_day + "Backup\\")
+    
