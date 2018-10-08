@@ -102,4 +102,4 @@ while (1):
 #    else: print("\n" + pre_record_day)
     if (pre_record_day != filename()[0]):
         os.system("rm -r " + pre_record_day + "Backup\\")
-    
+	pre_record_day = filename()[0]    
