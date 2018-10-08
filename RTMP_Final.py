@@ -32,7 +32,7 @@ def check_disk():
 #    usage_disk = round(obj_disk.used / (1024.0 ** 3), 3)
 #    free_disk = round(obj_disk.free / (1024.0 ** 3), 3)
     usage_persent_disk = obj_disk.percent
-    if ((100 - usage_persent_disk) < 10):
+    if ((100 - usage_persent_disk) < 20):
 #        print("Disk full alert")
         remove_dir()
 #    print("Total : " + str(total_disk) + " GB")
@@ -102,4 +102,4 @@ while (1):
 #    else: print("\n" + pre_record_day)
     if (pre_record_day != filename()[0]):
         os.system("rm -r " + pre_record_day + "Backup\\")
-	pre_record_day = filename()[0]    
+	    pre_record_day = filename()[0]
