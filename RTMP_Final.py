@@ -6,15 +6,20 @@ import uuid
 import psutil
 import shutil
 
+# 8F IP & port
+# 10.0.0.174:1935
+
+# extend IP & Port
+# 211.20.7.115:31935
 
 RTMP_DUMP_HEADER = "rtmpdump"
 RTMP_HEADER = "rtmp://"
-RTMP_IP = "10.0.0.174"
-RTMP_PORT = "1935"
+RTMP_IP = "211.20.7.115"
+RTMP_PORT = "31935"
 RTMP_URL_HEADER = "A0 - 0 - 0 - 0 - "
 IPCAM_ACCOUNT = "admin"
 IPCAM_PASSWORD = "888888"
-convert_locate = "G:\\"
+convert_locate = "G:\\RTMP\\"
 pre_record_day = ""
 
 def remove_dir():
@@ -85,12 +90,12 @@ while (1):
 #    print(convert_locate_A, convert_locate_B)
     send_command_OK = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_A + '.flv -v'
     send_command_Backup = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_B + '.flv -v'
-#    print(send_command_OK)
+    print(send_command_OK)
 #    print(send_command_Backup)
     record_Backup = subprocess.Popen(send_command_Backup)
     time.sleep(0.01)
     record_OK = subprocess.Popen(send_command_OK)
-    time.sleep(10)
+    time.sleep(300)
     record_Backup.kill()
     time.sleep(0.01)
     record_OK.kill()
@@ -102,4 +107,4 @@ while (1):
 #    else: print("\n" + pre_record_day)
     if (pre_record_day != filename()[0]):
         os.system("rm -r " + pre_record_day + "Backup\\")
-	    pre_record_day = filename()[0]
+        pre_record_day = filename()[0]
