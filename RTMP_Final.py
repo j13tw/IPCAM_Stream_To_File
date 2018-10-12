@@ -77,19 +77,21 @@ def filename():
     if not os.path.isdir(store_locate + "\\" + "Backup"):
         os.mkdir(store_locate + "\\" + "Backup")
 
-    return store_locate, hour+minute+second, 
+    return store_locate, hour+minute+second
 
 #print(filename()[0], filename()[1])
 
 while (1):
     check_disk()
     generate_uuid = uuid.uuid4()
-    user_uuid = str(generate_uuid).upper().replace('-', '')
+    user_uuid_A = str(generate_uuid).upper().replace('-', '')
+    generate_uuid = uuid.uuid4()
+    user_uuid_B = str(generate_uuid).upper().replace('-', '')
     convert_locate_A = filename()[0] + "OK\\" + filename()[1]
     convert_locate_B = filename()[0] + "Backup\\" + filename()[1]
 #    print(convert_locate_A, convert_locate_B)
-    send_command_OK = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_A + '.flv -v'
-    send_command_Backup = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_B + '.flv -v'
+    send_command_OK = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid_A + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_A + '.flv -v'
+    send_command_Backup = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid_B + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_B + '.flv -v'
     print(send_command_OK)
 #    print(send_command_Backup)
     record_Backup = subprocess.Popen(send_command_Backup)

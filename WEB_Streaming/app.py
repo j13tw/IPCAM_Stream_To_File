@@ -11,8 +11,8 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def rtmp():
     RTMP_HEADER = "rtmp://"
-    RTMP_IP = "10.0.0.174"
-    RTMP_PORT = "1935"
+    RTMP_IP = "211.20.7.115"
+    RTMP_PORT = "31935"
     RTMP_URL_HEADER = "A0 - 0 - 0 - 0 - "
     IPCAM_ACCOUNT = "admin"
     IPCAM_PASSWORD = "888888"
