@@ -14,21 +14,21 @@ import shutil
 
 RTMP_DUMP_HEADER = "rtmpdump"
 RTMP_HEADER = "rtmp://"
-RTMP_IP = "211.20.7.115"
-RTMP_PORT = "31935"
+RTMP_IP = "10.0.0.174"
+RTMP_PORT = "1935"
 RTMP_URL_HEADER = "A0 - 0 - 0 - 0 - "
 IPCAM_ACCOUNT = "admin"
 IPCAM_PASSWORD = "888888"
-convert_locate = "G:\\RTMP\\"
+convert_locate = "G:\\"
 pre_record_day = ""
 
 def remove_dir():
     global convert_locate
     all_dir = sorted(os.listdir(convert_locate))
-#    print(all_dir)
+    print(all_dir)
 #   delete the oldest file dir
-    os.system("rm -rf " + convert_locate + all_dir[0])
-    print("rm dir = " + all_dir[0])
+    os.system("rd /s/q " + convert_locate + all_dir[1])
+    print("delete dir = " + all_dir[1])
 
 def check_disk():
     global convert_locate
@@ -37,7 +37,7 @@ def check_disk():
 #    usage_disk = round(obj_disk.used / (1024.0 ** 3), 3)
 #    free_disk = round(obj_disk.free / (1024.0 ** 3), 3)
     usage_persent_disk = obj_disk.percent
-    if ((100 - usage_persent_disk) < 20):
+    if ((100 - usage_persent_disk) < 10):
 #        print("Disk full alert")
         remove_dir()
 #    print("Total : " + str(total_disk) + " GB")
@@ -97,7 +97,7 @@ while (1):
     record_Backup = subprocess.Popen(send_command_Backup)
     time.sleep(0.01)
     record_OK = subprocess.Popen(send_command_OK)
-    time.sleep(300)
+    time.sleep(600)
     record_Backup.kill()
     time.sleep(0.01)
     record_OK.kill()
