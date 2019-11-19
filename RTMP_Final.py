@@ -19,7 +19,7 @@ RTMP_PORT = "1935"
 RTMP_URL_HEADER = "A0 - 0 - 0 - 0 - "
 IPCAM_ACCOUNT = "admin"
 IPCAM_PASSWORD = "888888"
-convert_locate = "G:\\"
+convert_locate = "./rtmp/"
 pre_record_day = ""
 
 def remove_dir():
@@ -69,13 +69,13 @@ def filename():
     if not os.path.isdir(store_locate):
         os.mkdir(store_locate)
 
-    store_locate = store_locate + "\\"
+    store_locate = store_locate + "/"
 
-    if not os.path.isdir(store_locate + "\\" + "OK"):
-        os.mkdir(store_locate + "\\" + "OK")
+    if not os.path.isdir(store_locate + "/" + "OK"):
+        os.mkdir(store_locate + "/" + "OK")
     
-    if not os.path.isdir(store_locate + "\\" + "Backup"):
-        os.mkdir(store_locate + "\\" + "Backup")
+    if not os.path.isdir(store_locate + "/" + "Backup"):
+        os.mkdir(store_locate + "/" + "Backup")
 
     return store_locate, hour+minute+second
 
@@ -87,19 +87,19 @@ while (1):
     user_uuid_A = str(generate_uuid).upper().replace('-', '')
     generate_uuid = uuid.uuid4()
     user_uuid_B = str(generate_uuid).upper().replace('-', '')
-    convert_locate_A = filename()[0] + "OK\\" + filename()[1]
-    convert_locate_B = filename()[0] + "Backup\\" + filename()[1]
+    convert_locate_A = filename()[0] + "OK/" + filename()[1]
+    convert_locate_B = filename()[0] + "Backup/" + filename()[1]
 #    print(convert_locate_A, convert_locate_B)
     send_command_OK = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid_A + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_A + '.flv -v'
     send_command_Backup = RTMP_DUMP_HEADER + ' -r "' + RTMP_HEADER + RTMP_IP + ":" + RTMP_PORT + "/" + '" -y "' + RTMP_URL_HEADER + user_uuid_B + " - " + IPCAM_ACCOUNT + " - " + IPCAM_PASSWORD + '" -Y -o ' + convert_locate_B + '.flv -v'
     print(send_command_OK)
 #    print(send_command_Backup)
-    record_Backup = subprocess.Popen(send_command_Backup)
-    time.sleep(0.01)
+#    record_Backup = subprocess.Popen(send_command_Backup)
+#    time.sleep(0.01)
     record_OK = subprocess.Popen(send_command_OK)
     time.sleep(600)
-    record_Backup.kill()
-    time.sleep(0.01)
+#    record_Backup.kill()
+#    time.sleep(0.01)
     record_OK.kill()
 #   kill backup file    
 #    print("File Dir == " + filename()[0])
@@ -108,5 +108,5 @@ while (1):
         pre_record_day = filename()[0]
 #    else: print("\n" + pre_record_day)
     if (pre_record_day != filename()[0]):
-        os.system("rm -r " + pre_record_day + "Backup\\")
+        os.system("rm -r " + pre_record_day + "Backup/")
         pre_record_day = filename()[0]

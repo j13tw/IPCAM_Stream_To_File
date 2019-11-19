@@ -5,7 +5,7 @@ import subprocess
 import uuid
 
 def filename():
-    convert_locate = "G:/"
+    convert_locate = "./rtmp/"
     year = str(datetime.datetime.now().year)
     month = str(datetime.datetime.now().month)
     if (int(month) < 10): month = "0" + str(month)
